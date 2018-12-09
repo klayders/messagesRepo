@@ -10,3 +10,19 @@ spring:
         jdbc:
           lob:
             non_contextual_creation: true
+
+security:
+  oauth2:
+    client:
+      clientId: 973199606021-pkrfeantd42n7da2tr87v89i4r32h9q7.apps.googleusercontent.com
+      clientSecret: TxU5x_pOaQEEkwBzAqVFaY9A
+      accessTokenUri: https://www.googleapis.com/oauth2/v4/token
+      userAuthorizationUri: https://accounts.google.com/o/oauth2/v2/auth
+      clientAuthenticationScheme: form
+      scope: openid,email,profile
+    resource:
+      userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
+      prefer-token-info: true
+  #  security.oauth2.resource.userInfoUri=https://www.googleapis.com/oauth2/v3/userinfo
+
+
