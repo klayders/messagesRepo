@@ -12,9 +12,14 @@ then add module
 ```
 yarn add -D webpack webpack-cli webpack-dev-server babel-loader @babel/core @babel/preset-env vue-loader vue-template-compiler
 ```
-and
+add socket
 ```
 yarn add sockjs-client @stomp/stompjs
+```
+
+css style
+```
+yarn add vuetify
 ```
 download library for start fronted:
 
@@ -25,6 +30,10 @@ yarn add vue vue-resource
 then start
 ```
 npm start
+```
+or start
+```
+yarn start
 ```
 
 
