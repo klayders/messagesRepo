@@ -26,6 +26,13 @@ download library for start fronted:
 ```
 yarn add vue vue-resource
 ```  
+```
+yarn add vuex
+```
+
+```
+yarn add @babel/polyfill
+```
 
 then start
 ```

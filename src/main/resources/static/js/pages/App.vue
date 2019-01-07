@@ -9,38 +9,45 @@
             </v-btn>
         </v-toolbar>
         <v-content>
-            <v-container fluid v-if="!profile">Необходимо авторизоваться через
+            <v-container v-if="!profile">
+                Необходимо авторизоваться через
                 <a href="/login">Google</a>
             </v-container>
-            <v-container fluid v-if="profile">
-                <messages-list :messages="messages" />
+            <v-container v-if="profile">
+                <messages-list />
             </v-container>
         </v-content>
-
     </v-app>
 </template>
 
 <script>
+    import { mapState, mapMutations } from 'vuex'
     import MessagesList from 'components/messages/MessageList.vue'
     import { addHandler } from 'util/ws'
-    import { getIndex } from 'util/collections'
     export default {
         components: {
             MessagesList
         },
-        data() {
-            return {
-                messages: frontendData.messages,
-                profile: frontendData.profile
-            }
-        },
+        computed: mapState(['profile']),
+        methods: mapMutations(['addMessageMutation', 'updateMessageMutation', 'removeMessageMutation']),
         created() {
             addHandler(data => {
-                let index = getIndex(this.messages, data.id)
-                if (index > -1) {
-                    this.messages.splice(index, 1, data)
+                if (data.objectType === 'MESSAGE') {
+                    switch (data.eventType) {
+                        case 'CREATE':
+                            this.addMessageMutation(data.body)
+                            break
+                        case 'UPDATE':
+                            this.updateMessageMutation(data.body)
+                            break
+                        case 'REMOVE':
+                            this.removeMessageMutation(data.body)
+                            break
+                        default:
+                            console.error(`Looks like the event type if unknown "${data.eventType}"`)
+                    }
                 } else {
-                    this.messages.push(data)
+                    console.error(`Looks like the object type if unknown "${data.objectType}"`)
                 }
             })
         }

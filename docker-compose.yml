@@ -4,7 +4,8 @@ services:
 
 
   postgres:
-    image: postgres
+
+    image: postgres:latest
     environment:
     - POSTGRES_PASSWORD=root
     - POSTGRES_USER=root
