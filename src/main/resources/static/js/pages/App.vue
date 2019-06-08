@@ -2,8 +2,11 @@
     <v-app>
         <v-toolbar app>
             <v-toolbar-title>Sarafan</v-toolbar-title>
+            <v-bottom flat v-if="profile" :disabled="$route.path === '/'">
+                Список сообщений
+            </v-bottom>
             <v-spacer></v-spacer>
-            <span v-if="profile">{{profile.name}}</span>
+            <v-bottom flat v-if="profile"  :disabled="$route.path === '/profile'">{{profile.name}}</v-bottom>
             <v-btn v-if="profile" icon href="/logout">
                 <v-icon>exit_to_app</v-icon>
             </v-btn>
@@ -40,6 +43,11 @@
                     console.error(`Looks like the object type if unknown "${data.objectType}"`)
                 }
             })
+        },
+        beforeMount() {
+            if (!this.profile) {
+                this.$router.replace('/auth')
+            }
         }
     }
 </script>
