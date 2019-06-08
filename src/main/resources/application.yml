@@ -1,8 +1,8 @@
 spring:
   datasource:
     url: jdbc:postgresql://localhost:5432/test
-    username: root
-    password: root
+    username: postgres
+    password: 1234
   jpa:
     generate-ddl: true
     properties:
