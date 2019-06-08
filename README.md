@@ -34,6 +34,10 @@ yarn add vuex
 yarn add @babel/polyfill
 ```
 
+```
+yarn add vue-router
+```
+
 then start
 ```
 npm start
