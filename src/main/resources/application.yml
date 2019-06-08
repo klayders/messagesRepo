@@ -15,6 +15,8 @@ spring:
       initialize-schema: always
       table-name: SPRING_SESSION
       schema: classpath:session_tables.sql
+  profiles:
+    active: dev
 
 security:
   oauth2:
@@ -29,5 +31,4 @@ security:
       userInfoUri: https://www.googleapis.com/oauth2/v3/userinfo
       prefer-token-info: true
   #  security.oauth2.resource.userInfoUri=https://www.googleapis.com/oauth2/v3/userinfo
-
 
