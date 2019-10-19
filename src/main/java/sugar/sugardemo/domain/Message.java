@@ -1,7 +1,9 @@
 package sugar.sugardemo.domain;
 
 import com.fasterxml.jackson.annotation.JsonFormat;
+import com.fasterxml.jackson.annotation.JsonIdentityInfo;
 import com.fasterxml.jackson.annotation.JsonView;
+import com.fasterxml.jackson.annotation.ObjectIdGenerators;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.ToString;
@@ -15,18 +17,22 @@ import java.util.List;
 @Data
 @ToString(of = {"id", "text"})
 @EqualsAndHashCode(of = {"id"})
+@JsonIdentityInfo(
+  generator = ObjectIdGenerators.PropertyGenerator.class,
+  property = "id"
+)
 public class Message {
-    @Id
-    @GeneratedValue(strategy = GenerationType.AUTO)
-    @JsonView(Views.Id.class)
-    private Long id;
-    @JsonView(Views.IdName.class)
-    private String text;
+  @Id
+  @GeneratedValue(strategy = GenerationType.AUTO)
+  @JsonView(Views.Id.class)
+  private Long id;
+  @JsonView(Views.IdName.class)
+  private String text;
 
-    @Column(updatable = false)
-    @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
-    @JsonView(Views.FullMessage.class)
-    private LocalDateTime creationDate;
+  @Column(updatable = false)
+  @JsonFormat(shape = JsonFormat.Shape.STRING, pattern = "yyyy-MM-dd HH:mm:ss")
+  @JsonView(Views.FullMessage.class)
+  private LocalDateTime creationDate;
 
   @ManyToOne
   @JoinColumn(name = "user_id")
@@ -37,13 +43,13 @@ public class Message {
   @JsonView(Views.FullMessage.class)
   private List<Comment> comments;
 
-    @JsonView(Views.FullMessage.class)
-    private String link;
-    @JsonView(Views.FullMessage.class)
-    private String linkTitle;
-    @JsonView(Views.FullMessage.class)
-    private String linkDescription;
-    @JsonView(Views.FullMessage.class)
-    private String linkCover;
+  @JsonView(Views.FullMessage.class)
+  private String link;
+  @JsonView(Views.FullMessage.class)
+  private String linkTitle;
+  @JsonView(Views.FullMessage.class)
+  private String linkDescription;
+  @JsonView(Views.FullMessage.class)
+  private String linkCover;
 
 }
