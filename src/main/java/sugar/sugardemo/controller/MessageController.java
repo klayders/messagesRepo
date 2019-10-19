@@ -6,8 +6,10 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.beans.BeanUtils;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
 import sugar.sugardemo.domain.Message;
+import sugar.sugardemo.domain.User;
 import sugar.sugardemo.domain.Views;
 import sugar.sugardemo.dto.EventType;
 import sugar.sugardemo.dto.MetaDto;
@@ -53,9 +55,13 @@ public class MessageController {
     }
 
     @PostMapping
-    public Message create(@RequestBody Message message) throws IOException {
-        fillMeta(message);
+    public Message create(@RequestBody Message message,
+                          @AuthenticationPrincipal User user) throws IOException {
         message.setCreationDate(LocalDateTime.now());
+        fillMeta(message);
+
+        message.setAuthor(user);
+
         Message create = messageRepository.save(message);
 
         wsSender.accept(EventType.CREATE, create);
@@ -101,7 +107,7 @@ public class MessageController {
             }else if (url.contains("youtube")){
                 MetaDto meta = getMeta(url);
                 message.setLinkCover(meta.getCover());
-                message.setLinkTitile(meta.getTitle());
+                message.setLinkTitle(meta.getTitle());
                 message.setLinkDescription(meta.getDescription());
             }
         }

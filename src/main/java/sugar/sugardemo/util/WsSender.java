@@ -20,13 +20,13 @@ public class WsSender {
     private final ObjectMapper objectMapper;
 
     public <T> BiConsumer<EventType, T> getSender(ObjectType objectType, Class view) {
-        ObjectWriter mapper = this.objectMapper.setConfig(this.objectMapper.getSerializationConfig())
+        ObjectWriter writer = this.objectMapper.setConfig(this.objectMapper.getSerializationConfig())
                 .writerWithView(view);
 
         return (EventType eventType, T payload) -> {
             String value;
             try {
-                value = mapper.writeValueAsString(payload);
+                value = writer.writeValueAsString(payload);
             } catch (JsonProcessingException e) {
                 throw new RuntimeException(e);
             }
