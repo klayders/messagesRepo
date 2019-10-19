@@ -19,38 +19,39 @@ import sugar.sugardemo.service.MessageService;
 
 import java.util.HashMap;
 
-import static sugar.sugardemo.controller.MessageController.MESSAGES_PER_PAGE;
-
 @Controller
 @RequestMapping("/")
 public class MainController {
+  private final MessageService messageService;
 
   @Value("${spring.profiles.active}")
   private String profile;
-
-  private final MessageService messageService;
   private final ObjectWriter writer;
 
   @Autowired
-  public MainController(MessageService messageService, ObjectMapper objectMapper) {
-    this.writer = objectMapper.setConfig(objectMapper.getSerializationConfig())
-      .writerWithView(Views.FullMessage.class);
+  public MainController(MessageService messageService, ObjectMapper mapper) {
     this.messageService = messageService;
+
+    this.writer = mapper
+      .setConfig(mapper.getSerializationConfig())
+      .writerWithView(Views.FullMessage.class);
   }
 
-
   @GetMapping
-  public String main(Model model,
-                     @AuthenticationPrincipal User user) throws JsonProcessingException {
+  public String main(
+    Model model,
+    @AuthenticationPrincipal User user
+  ) throws JsonProcessingException {
     HashMap<Object, Object> data = new HashMap<>();
+
     if (user != null) {
       data.put("profile", user);
 
-      Sort sortById = Sort.by(Sort.Direction.DESC, "id");
-      PageRequest pageRequest = PageRequest.of(0, MESSAGES_PER_PAGE, sortById);
+      Sort sort = Sort.by(Sort.Direction.DESC, "id");
+      PageRequest pageRequest = PageRequest.of(0, MessageController.MESSAGES_PER_PAGE, sort);
       MessagePageDto messagePageDto = messageService.findAll(pageRequest);
 
-      String messages = writer.writeValueAsString(messagePageDto);
+      String messages = writer.writeValueAsString(messagePageDto.getMessages());
 
       model.addAttribute("messages", messages);
       data.put("currentPage", messagePageDto.getCurrentPage());
@@ -58,6 +59,7 @@ public class MainController {
     } else {
       model.addAttribute("messages", "[]");
     }
+
     model.addAttribute("frontendData", data);
     model.addAttribute("isDevMode", "dev".equals(profile));
 
