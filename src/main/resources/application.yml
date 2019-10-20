@@ -2,9 +2,9 @@ server:
   address: 0.0.0.0
 spring:
   datasource:
-    url: jdbc:postgresql://localhost:5432/test
-    username: postgres
-    password: 1234
+    url: ${SPRING_DATASOURCE_URL:jdbc:postgresql://localhost:5432/test}
+    username: ${SPRING_DATASOURCE_USERNAME:postgres}
+    password: ${SPRING_DATASOURCE_PASSWORD:1234}
   jpa:
     generate-ddl: true
     properties:
