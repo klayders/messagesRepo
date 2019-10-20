@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
 
 @Service
 public class MessageService {
-  private static String URL_PATTERN = "https?:\\/\\/?[\\w\\d\\._\\-%\\/\\?=&#]+";
+  private static String URL_PATTERN = "^((?:https?:)?\\/\\/)?((?:www|m)\\.)?((?:youtube\\.com|youtu.be))(\\/(?:[\\w\\-]+\\?v=|embed\\/|v\\/)?)([\\w\\-]+)(\\S+)?$";
   private static String IMAGE_PATTERN = "\\.(jpeg|jpg|gif|png)$";
 
   private static Pattern URL_REGEX = Pattern.compile(URL_PATTERN, Pattern.CASE_INSENSITIVE);
@@ -65,7 +65,7 @@ public class MessageService {
 
       if (matcher.find()) {
         message.setLinkCover(url);
-      } else if (!url.contains("youtu")) {
+      } else if (url.contains("youtu")) {
         MetaDto meta = getMeta(url);
 
         message.setLinkCover(meta.getCover());
