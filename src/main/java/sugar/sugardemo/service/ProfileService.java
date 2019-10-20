@@ -2,9 +2,11 @@ package sugar.sugardemo.service;
 
 import org.springframework.stereotype.Service;
 import sugar.sugardemo.domain.User;
+import sugar.sugardemo.domain.UserSubscription;
 import sugar.sugardemo.repo.UserDetailsRepository;
 
-import java.util.Set;
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 public class ProfileService {
@@ -16,12 +18,18 @@ public class ProfileService {
   }
 
   public User changeSubscription(User channel, User subscriber) {
-    Set<User> subscribers = channel.getSubscribers();
+    List<UserSubscription> subcriptions = channel.getSubscribers()
+      .stream()
+      .filter(subscription ->
+        subscription.getSubscriber().equals(subscriber)
+      )
+      .collect(Collectors.toList());
 
-    if (subscribers.contains(subscriber)) {
-      subscribers.remove(subscriber);
+    if (subcriptions.isEmpty()) {
+      UserSubscription subscription = new UserSubscription(channel, subscriber);
+      channel.getSubscribers().add(subscription);
     } else {
-      subscribers.add(subscriber);
+      channel.getSubscribers().removeAll(subcriptions);
     }
 
     return userDetailsRepository.save(channel);
