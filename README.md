@@ -50,4 +50,8 @@ yarn start
 
 
 
+RUN 
+```
+java -jar -DclientSecret=TxU5x_pOaQEEkwBzAqVFaY9A  target/sugar-demo-0.0.1-SNAPSHOT.jar
 
+```

@@ -17,8 +17,7 @@ spring:
       initialize-schema: always
       table-name: SPRING_SESSION
       schema: classpath:session_tables.sql
-  profiles:
-    active: dev
+
 
 security:
   oauth2:
