@@ -97,11 +97,6 @@
 			<artifactId>spring-boot-starter-websocket</artifactId>
 		</dependency>
 
-		<!-- https://mvnrepository.com/artifact/org.springframework.session/spring-session-jdbc -->
-        <dependency>
-            <groupId>org.springframework.session</groupId>
-            <artifactId>spring-session-jdbc</artifactId>
-        </dependency>
 		<!-- https://mvnrepository.com/artifact/org.jsoup/jsoup -->
 		<dependency>
 			<groupId>org.jsoup</groupId>

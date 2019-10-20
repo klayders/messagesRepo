@@ -8,6 +8,7 @@
   <title>Sarafan</title>
   <script th:inline="javascript">
       var frontendData = [[${frontendData}]];
+      var profile = [# th:utext="${profile}" /];
       var messages = [# th:utext="${messages}" /];
   </script>
 </head>

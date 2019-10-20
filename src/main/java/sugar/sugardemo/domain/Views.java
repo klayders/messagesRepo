@@ -12,4 +12,6 @@ public final class Views {
   public interface FullMessage extends IdName {
   }
 
+  public interface FullProfile extends IdName {
+  }
 }
