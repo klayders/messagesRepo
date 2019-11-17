@@ -19,6 +19,8 @@ yarn add sockjs-client @stomp/stompjs
 
 css style
 ```
+yarn add -D vue-style-loader css-loader
+
 yarn add vuetify
 ```
 download library for start fronted:
